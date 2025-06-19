@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💖KONVERSI BILANGAN💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    :root {
+      --bg: #fff0f6;
+      --card: #ffffff;
+      --text: #880e4f;
+      --primary: #ec407a;
+      --shadow: rgba(236, 64, 122, 0.3);
+    }
+    [data-theme="dark"] {
+      --bg: #2a0d1f;
+      --card: #3b1e2d;
+      --text: #fce4ec;
+      --primary: #f06292;
+      --shadow: rgba(252, 228, 236, 0.2);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      background-image: url('2357380.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      border-radius: 20px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 700px;
+      box-shadow: 0 8px 20px var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .container {
+      background: rgba(50, 20, 30, 0.85);
+    }
+    h1 {
+      text-align: center;
+      color: var(--primary);
+    }
+    label, select, input, button {
+      display: block;
+      width: 100%;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+    select, input {
+      padding: 0.6rem;
+      border-radius: 10px;
+      border: none;
+      background: #fce4ec;
+    }
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .result, .calc-result {
+      background: #ffffff10;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    .steps {
+      background: linear-gradient(145deg, #ffe0ec, #f8bbd0);
+      border: 2px dashed var(--primary);
+      border-radius: 14px;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #6a1b3f;
+      box-shadow: 0 4px 10px rgba(255, 105, 180, 0.2);
+    }
+    .steps p {
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .download-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .download-buttons button {
+      flex: 1;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.85rem;
+      border-radius: 10px;
+      white-space: nowrap;
+      background: var(--primary);
+      color: white;
+      border: none;
+      box-shadow: 0 2px 4px var(--shadow);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .download-buttons button:hover {
+      background: var(--text);
+    }
+    .theme-toggle {
+      float: right;
+      cursor: pointer;
+      font-size: 1.3rem;
+      margin-bottom: -2rem;
+      user-select: none;
+    }
+    .symbols {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .symbols span {
+      background: var(--primary);
+      color: white;
+      font-size: 1.2rem;
+      padding: 0.4rem 0.6rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px var(--shadow);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .symbols span:hover {
+      transform: scale(1.1);
+      background: var(--text);
+    }
+
+    /* Sparkle Effect ✨ */
+    .sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle, white, var(--primary));
+      border-radius: 50%;
+      pointer-events: none;
+      animation: sparkleAnim 0.6s ease-out forwards;
+      z-index: 999;
+    }
+
+    .ig-name {
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+    }
+    .ig-name a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .ig-name a:hover {
+      text-decoration: underline;
+    }
+    .ig-icon {
+      font-size: 1.1rem;
+    }
+
+    @keyframes sparkleAnim {
+      0% {
+        opacity: 1;
+        transform: scale(1) translate(0, 0);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2) translate(var(--x), var(--y));
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <div class="container">
+    <div class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</div>
+    <h1>💖KONVERSI BILANGAN💖</h1>
+    <p class="ig-name">
+      <a href="https://instagram.com/slsablla2206_" target="_blank">
+        <span class="ig-icon"></span>By:@slsablla2206_
+      </a>
+    </p>
+
+    <label for="mode">Pilih Mode:</label>
+    <select id="mode"></select>
+
+    <label for="input">Masukkan Bilangan:</label>
+    <input type="text" id="input" placeholder="Contoh: -42 atau 1011" />
+
+    <div class="symbols">
+      <span onclick="insertOperator('+')">➕</span>
+      <span onclick="insertOperator('-')">➖</span>
+      <span onclick="insertOperator('*')">✖️</span>
+      <span onclick="insertOperator('/')">➗</span>
+    </div>
+
+    <button onclick="convertWithSparkle(event)">🔄 Konversi</button>
+
+    <div class="calc-result" id="calcResult"></div>
+    <div class="result" id="result"></div>
+    <div class="steps" id="steps"></div>
+
+    <div class="download-buttons">
+      <button onclick="downloadTxt()">📄 TXT</button>
+      <button onclick="downloadPDF()">🧾 PDF</button>
+      <button onclick="downloadExcel()">📊 Excel</button>
+      <button onclick="copyResult()">📋 Salin</button>
+    </div>
+  </div>
+
+  <script>
+    const modeSelect = document.getElementById('mode');
+    const calcResultDiv = document.getElementById('calcResult');
+    const stepsDiv = document.getElementById('steps');
+    const resultDiv = document.getElementById('result');
+    let lastOutput = '';
+
+    const allModes = [
+      ['dec-bin', 'Desimal ➜ Biner'], ['bin-dec', 'Biner ➜ Desimal'],
+      ['dec-oct', 'Desimal ➜ Oktal'], ['oct-dec', 'Oktal ➜ Desimal'],
+      ['dec-hex', 'Desimal ➜ Heksadesimal'], ['hex-dec', 'Heksadesimal ➜ Desimal'],
+      ['bin-oct', 'Biner ➜ Oktal'], ['bin-hex', 'Biner ➜ Heksadesimal'],
+      ['oct-bin', 'Oktal ➜ Biner'], ['hex-bin', 'Heksadesimal ➜ Biner'],
+      ['dec-rom', 'Desimal ➜ Romawi']
+    ];
+    allModes.forEach(([val, label]) => {
+      const opt = document.createElement('option');
+      opt.value = val;
+      opt.textContent = label;
+      modeSelect.appendChild(opt);
+    });
+
+    function toggleTheme() {
+      const body = document.body;
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeToggle').textContent = isDark ? '🌙' : '☀️';
+    }
+
+    function insertOperator(op) {
+      const input = document.getElementById('input');
+      input.value += op;
+      input.focus();
+    }
+
+    function animateSteps(steps) {
+      stepsDiv.innerHTML = '';
+      steps.forEach(step => {
+        const p = document.createElement('p');
+        p.textContent = step;
+        stepsDiv.appendChild(p);
+      });
+    }
+
+    function decToRoman(num, steps) {
+      if (num < 1) return '❌ Tidak bisa konversi angka < 1 ke Romawi';
+      const map = [
+        [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
+        [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
+        [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']
+      ];
+      let roman = '';
+      for (let [value, symbol] of map) {
+        while (num >= value) {
+          roman += symbol;
+          steps.push(`${num} - ${value} = ${num - value} ➜ ${symbol}`);
+          num -= value;
+        }
+      }
+      return roman;
+    }
+
+    function convertWithSparkle(e) {
+      createSparkles(e);
+      convert();
+    }
+
+    function createSparkles(e) {
+      const container = document.querySelector('.container');
+      const rect = container.getBoundingClientRect();
+      for (let i = 0; i < 15; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = (e.clientX - rect.left) + 'px';
+        sparkle.style.top = (e.clientY - rect.top) + 'px';
+        sparkle.style.setProperty('--x', (Math.random() * 100 - 50) + 'px');
+        sparkle.style.setProperty('--y', (Math.random() * 100 - 50) + 'px');
+        container.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 700);
+      }
+    }
+
+    function convert() {
+      const mode = modeSelect.value;
+      let rawInput = document.getElementById('input').value.trim();
+      stepsDiv.innerHTML = '';
+      resultDiv.innerHTML = '';
+      calcResultDiv.innerHTML = '';
+      let result = '', steps = [];
+      let input = rawInput;
+      if (input.startsWith('-')) input = input.slice(1);
+      let evaluated = input;
+
+      if (!/^[0-9+\-*/().\sA-Fa-f]+$/.test(input)) {
+        calcResultDiv.innerHTML = '❌ Ekspresi tidak valid';
+        return;
+      }
+
+      try {
+        if (/[\+\-\*\/]/.test(input)) {
+          evaluated = eval(input).toString();
+          calcResultDiv.innerHTML = `<strong>Hasil Kalkulator:</strong> ${evaluated}`;
+        }
+      } catch {
+        calcResultDiv.innerHTML = '❌ Ekspresi tidak valid';
+        return;
+      }
+
+      input = evaluated;
+
+      try {
+        switch (mode) {
+          case 'dec-bin': {
+            let n = parseInt(input);
+            result = n.toString(2);
+            while (n > 0) {
+              steps.push(`${n} ÷ 2 = ${Math.floor(n / 2)}, sisa ${n % 2}`);
+              n = Math.floor(n / 2);
+            }
+            steps.reverse();
+            break;
+          }
+          case 'bin-dec': {
+            let total = 0;
+            input.split('').reverse().forEach((digit, i) => {
+              let val = parseInt(digit) * Math.pow(2, i);
+              steps.push(`${digit} × 2^${i} = ${val}`);
+              total += val;
+            });
+            result = total;
+            break;
+          }
+          case 'dec-oct': result = parseInt(input).toString(8); break;
+          case 'oct-dec': result = parseInt(input, 8).toString(10); break;
+          case 'dec-hex': result = parseInt(input).toString(16).toUpperCase(); break;
+          case 'hex-dec': result = parseInt(input, 16).toString(10); break;
+          case 'bin-oct': result = parseInt(input, 2).toString(8); break;
+          case 'bin-hex': result = parseInt(input, 2).toString(16).toUpperCase(); break;
+          case 'oct-bin': result = parseInt(input, 8).toString(2); break;
+          case 'hex-bin': result = parseInt(input, 16).toString(2); break;
+          case 'dec-rom': result = decToRoman(parseInt(input), steps); break;
+        }
+
+        const modeLabel = modeSelect.options[modeSelect.selectedIndex].text;
+        resultDiv.innerHTML = `<strong>Hasil Konversi:</strong> ${result}`;
+        lastOutput = `Input: ${rawInput}\nMode: ${modeLabel}\nHasil: ${result}\nLangkah:\n${steps.join('\n')}`;
+        animateSteps(steps);
+      } catch {
+        resultDiv.innerHTML = '❌ Input tidak valid';
+      }
+    }
+
+    function downloadTxt() {
+      const blob = new Blob([lastOutput], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'hasil-konversi.txt';
+      a.click();
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const lines = lastOutput.split('\n');
+      lines.forEach((line, i) => doc.text(line, 10, 10 + i * 8));
+      doc.save('hasil-konversi.pdf');
+    }
+
+    function downloadExcel() {
+      const wb = XLSX.utils.book_new();
+      const ws_data = lastOutput.split('\n').map(line => [line]);
+      const ws = XLSX.utils.aoa_to_sheet(ws_data);
+      XLSX.utils.book_append_sheet(wb, ws, 'Konversi');
+      XLSX.writeFile(wb, 'hasil-konversi.xlsx');
+    }
+
+    function copyResult() {
+      navigator.clipboard.writeText(lastOutput).then(() => {
+        alert("✅ Hasil disalin ke clipboard!");
+      });
+    }
+  </script>
+</body>
+</html>
